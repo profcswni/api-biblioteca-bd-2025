@@ -18,8 +18,8 @@ Una API RESTful moderna para gestionar un sistema de biblioteca, construida con 
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/tunombre/biblioteca2025.git
-   cd biblioteca2025
+   git clone https://github.com/profcswni/api-biblioteca-bd-2025.git
+   cd api-biblioteca-bd-2025
    ```
 
 2. Instalar dependencias:
@@ -32,14 +32,14 @@ Una API RESTful moderna para gestionar un sistema de biblioteca, construida con 
    DB_HOST=localhost
    DB_USER=tunombredeusuario
    DB_PASSWORD=tucontraseña
-   DB_NAME=biblioteca2025
+   DB_NAME=tubasededatos
    DB_PORT=3306
    PORT=3000
    ```
 
 4. Iniciar el servidor:
    ```bash
-   npm start
+   npm run dev
    ```
 
 ## 🔌 Endpoints de la API
@@ -57,15 +57,17 @@ Una API RESTful moderna para gestionar un sistema de biblioteca, construida con 
 ## 📦 Estructura del Proyecto
 
 ```
-biblioteca2025/
-├── config.js          # Configuración de conexión a la base de datos
-├── index.js           # Punto de entrada principal de la aplicación
-├── .env               # Variables de entorno (no incluido en git)
-├── routes/
-│   └── librosRoute.js # Rutas de libros
-├── controllers/       # Controladores de la API
-├── models/            # Modelos de la base de datos
-└── package.json       # Dependencias del proyecto
+api-biblioteca-bd-2025/
+├── config.js                          # Configuración de conexión a la base de datos
+├── index.js                           # Punto de entrada principal de la aplicación
+├── .env                               # Variables de entorno (no incluido en git)
+├── routes/                            # Rutas de la API 
+│   └── librosRoute.js                 # Rutas de libros
+├── controllers/                       # Controladores de la API
+│   └── librosController.js            # Controladores de libros
+├── db/                                # Consultas de la base de datos
+│   └── librosQuery.js                 # Consultas de libros
+└── package.json                       # Dependencias del proyecto
 ```
 
 ## 🔒 Variables de Entorno
@@ -81,11 +83,12 @@ biblioteca2025/
 
 ## 📝 Licencia
 
-MIT
+[MIT](./LICENSE)
 
 ## 👥 Colaboradores
 
-- Tu Nombre - Trabajo inicial
+- Madeling - Trabajo inicial
+- Carlos Andres Perez Ubeda - Ajustes adicionales
 
 ---
 
