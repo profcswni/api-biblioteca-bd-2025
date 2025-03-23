@@ -1,92 +1,92 @@
-# 📚 Biblioteca2025 API
+# 📚 API Biblioteca2025
 
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 
-A modern RESTful API for managing a library system, built with Node.js, Express, and MySQL.
+Una API RESTful moderna para gestionar un sistema de biblioteca, construida con Node.js, Express y MySQL.
 
-## 🚀 Features
+## 🚀 Características
 
-- **Secure Database Access**: Uses environment variables to protect sensitive credentials
-- **Connection Pooling**: Efficient database connections using MySQL2 pool
-- **RESTful API**: Well-structured endpoints for library resource management
-- **Modern JavaScript**: ES6+ syntax with import/export
+- **Acceso Seguro a Base de Datos**: Utiliza variables de entorno para proteger credenciales sensibles
+- **Agrupación de Conexiones**: Conexiones eficientes a la base de datos utilizando el pool de MySQL2
+- **API RESTful**: Endpoints bien estructurados para la gestión de recursos de biblioteca
+- **JavaScript Moderno**: Sintaxis ES6+ con import/export
 
-## 🛠️ Installation
+## 🛠️ Instalación
 
-1. Clone the repository:
+1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/yourusername/biblioteca2025.git
+   git clone https://github.com/tunombre/biblioteca2025.git
    cd biblioteca2025
    ```
 
-2. Install dependencies:
+2. Instalar dependencias:
    ```bash
    npm install
    ```
 
-3. Create a `.env` file in the root directory with the following structure:
+3. Crear un archivo `.env` en el directorio raíz con la siguiente estructura:
    ```
    DB_HOST=localhost
-   DB_USER=yourusername
-   DB_PASSWORD=yourpassword
+   DB_USER=tunombredeusuario
+   DB_PASSWORD=tucontraseña
    DB_NAME=biblioteca2025
    DB_PORT=3306
    PORT=3000
    ```
 
-4. Start the server:
+4. Iniciar el servidor:
    ```bash
    npm start
    ```
 
-## 🔌 API Endpoints
+## 🔌 Endpoints de la API
 
-### Books (Libros)
+### Libros
 
-| Method | Endpoint | Description |
+| Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| GET    | /libros  | Get all books |
-| GET    | /libros/:id | Get book by ID |
-| POST   | /libros  | Create new book |
-| PUT    | /libros/:id | Update a book |
-| DELETE | /libros/:id | Delete a book |
+| GET    | /libros  | Obtener todos los libros |
+| GET    | /libros/:id | Obtener libro por ID |
+| POST   | /libros  | Crear nuevo libro |
+| PUT    | /libros/:id | Actualizar un libro |
+| DELETE | /libros/:id | Eliminar un libro |
 
-## 📦 Project Structure
+## 📦 Estructura del Proyecto
 
 ```
 biblioteca2025/
-├── config.js          # Database connection configuration
-├── index.js           # Main application entry point
-├── .env               # Environment variables (not in git)
+├── config.js          # Configuración de conexión a la base de datos
+├── index.js           # Punto de entrada principal de la aplicación
+├── .env               # Variables de entorno (no incluido en git)
 ├── routes/
-│   └── librosRoute.js # Book routes
-├── controllers/       # API controllers
-├── models/            # Database models
-└── package.json       # Project dependencies
+│   └── librosRoute.js # Rutas de libros
+├── controllers/       # Controladores de la API
+├── models/            # Modelos de la base de datos
+└── package.json       # Dependencias del proyecto
 ```
 
-## 🔒 Environment Variables
+## 🔒 Variables de Entorno
 
-| Variable | Description |
+| Variable | Descripción |
 |----------|-------------|
-| DB_HOST  | Database host address |
-| DB_USER  | Database username |
-| DB_PASSWORD | Database password |
-| DB_NAME  | Database name |
-| DB_PORT  | Database port |
-| PORT     | Application port |
+| DB_HOST  | Dirección del host de la base de datos |
+| DB_USER  | Nombre de usuario de la base de datos |
+| DB_PASSWORD | Contraseña de la base de datos |
+| DB_NAME  | Nombre de la base de datos |
+| DB_PORT  | Puerto de la base de datos |
+| PORT     | Puerto de la aplicación |
 
-## 📝 License
+## 📝 Licencia
 
 MIT
 
-## 👥 Contributors
+## 👥 Colaboradores
 
-- Your Name - Initial work
+- Tu Nombre - Trabajo inicial
 
 ---
 
-⭐️ Star this repository if you find it useful! 
+⭐️ ¡Dale una estrella a este repositorio si lo encuentras útil! 
