@@ -9,6 +9,8 @@ const app = express()
 
 // Importar las rutas de los libros
 import productosRouter from './routes/librosRoute.js';
+// Importar las rutas de los autores
+import autorRouter from './routes/autoresRoute.js';
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -17,9 +19,11 @@ app.use(cors())
 
 //Usar las rutas
 app.use('/libros', productosRouter); // LIBROS
+app.use('/autores', autorRouter); // AUTORES
 
-const port = process.env.PORT || 3000
+const port =
+    process.env.PORT || 3000
 
 app.listen(port, () => {
-    console.log(`servidor corriendo en el puerto ${port}`)
+    console.log(`Servidor corriendo en el puerto ${port}`)
 })
