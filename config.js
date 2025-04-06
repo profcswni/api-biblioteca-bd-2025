@@ -1,40 +1,39 @@
-import {createConnection, createPool} from 'mysql2';
+import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
 // Load env variables
 dotenv.config();
 
-// Create a pool to avoid the overhead of creating a new connection every time one is needed
-
-const config = createPool({
-    host: process.env.DB_HOST, 
+// Create a connection pool for PostgreSQL
+const config = new Pool({
+    host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     port: Number(process.env.DB_PORT),
-    keepAliveInitialDelay: 300000,
-    enableKeepAlive: true,
-})
+    max: 20, // Maximum number of clients in the pool
+    idleTimeoutMillis: 30000, // How long a client is allowed to remain idle before being closed
+    connectionTimeoutMillis: 2000, // How long to wait before timing out when connecting a new client
+});
 
-// Validate the connection
-
-config.getConnection((err, connection) => {
+// Test the connection
+config.connect((err, client, release) => {
     if (err) {
         console.error('ERROR: ', err);
-        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-            console.error('La conexión a la base de datos fue cerrada.');
-        }
-        if (err.code === 'ER_CON_COUNT_ERROR') {
-            console.error('La base de datos tiene muchas conexiones.');
-        }
         if (err.code === 'ECONNREFUSED') {
             console.error('La conexión a la base de datos fue rechazada.');
         }
+        if (err.code === 'ETIMEDOUT') {
+            console.error('Tiempo de conexión a la base de datos agotado.');
+        }
+        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+            console.error('La conexión a la base de datos fue cerrada.');
+        }
     }
-    if (connection) {
-        connection.release();
+    if (client) {
+        release();
+        console.log('PostgreSQL connected successfully');
     }
-    return;
-})
+});
 
-export {config};
+export { config };

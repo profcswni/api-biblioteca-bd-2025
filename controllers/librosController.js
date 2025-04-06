@@ -46,7 +46,7 @@ import {
     try {
         const datosLibro = req.body;
         const resultado = await crearLibroQuery(datosLibro);
-        res.json({ mensaje: 'Libro creado con éxito', id: resultado.insertId });
+        res.json({ mensaje: 'Libro creado con éxito', id: resultado.rows[0].id });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -60,7 +60,7 @@ import {
         const id = req.params.id;
         const datosLibro = req.body;
         const resultado = await actualizarLibroQuery(id, datosLibro);
-        if (resultado.affectedRows > 0) {
+        if (resultado.rowCount > 0) {
             res.json({ mensaje: 'Libro actualizado con éxito', id: id });
         } else {
             res.status(404).json({ mensaje: 'Libro no encontrado' });
@@ -77,7 +77,7 @@ import {
     try {
         const id = req.params.id;
         const resultado = await eliminarLibroQuery(id);
-        if (resultado.affectedRows > 0) {
+        if (resultado.rowCount > 0) {
             res.json({ mensaje: 'Libro eliminado con éxito' });
         } else {
             res.status(404).json({ mensaje: 'Libro no encontrado' });

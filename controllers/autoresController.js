@@ -46,7 +46,7 @@ const crearAutor = async (req, res) => {
     try {
         const datosAutor = req.body;
         const resultado = await crearAutorQuery(datosAutor);
-        res.json({ mensaje: 'Autor creado con éxito', id: resultado.insertId });
+        res.json({ mensaje: 'Autor creado con éxito', id: resultado.rows[0].id });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -59,8 +59,8 @@ const actualizarAutor = async (req, res) => {
     try {
         const id = req.params.id;
         const datosAutor = req.body;
-        const resultado = await actualizarAutorQuery(id, datosLibro);
-        if (resultado.affectedRows > 0) {
+        const resultado = await actualizarAutorQuery(id, datosAutor);
+        if (resultado.rowCount > 0) {
             res.json({ mensaje: 'Autor actualizado con éxito', id: id });
         } else {
             res.status(404).json({ mensaje: 'Autor no encontrado' });
@@ -77,7 +77,7 @@ const eliminarAutor = async (req, res) => {
     try {
         const id = req.params.id;
         const resultado = await eliminarAutorQuery(id);
-        if (resultado.affectedRows > 0) {
+        if (resultado.rowCount > 0) {
             res.json({ mensaje: 'Autor eliminado con éxito' });
         } else {
             res.status(404).json({ mensaje: 'Autor no encontrado' });

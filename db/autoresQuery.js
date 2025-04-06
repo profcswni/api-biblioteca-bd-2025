@@ -3,89 +3,77 @@ import { config } from '../config.js';
 /**
  * Carga la lista de autores
  */
-const listarTodosAutoresQuery = () => {
-    // Una promesa es una forma de que siempre se devuelva un resultado al quien llama (sea error o éxito)
-    // Si la consulta no genera error, entonces resuelve/cumple la promesa con el resultado
-    // Si hay algun error entonces rechaza la consulta e informa la razón 
-    return new Promise((resolve, reject) => {
-        config.query('SELECT * FROM autores', (err, filas) => {
-            // Si genera error, mostramos en la consola que es lo que falla
-            if (err) {
-                console.log(err);
-                reject(err);
-            } else {
-                // Si no hay error, devolvemos los datos de la tabla 
-                resolve(filas);
-            }
-        });
-    });
+const listarTodosAutoresQuery = async () => {
+    try {
+        const result = await config.query('SELECT * FROM autores');
+        return result.rows;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 };
 
 /**
  * Buscar un autor por su ID (llave primaria)
  */
-const listarAutorPorIdQuery = (id) => {
-    return new Promise((resolve, reject) => {
-        config.query('SELECT * FROM autores WHERE id = ? LIMIT 1', [id], (err, filas) => {
-            if (err) {
-                console.log(err);
-                reject(err);
-            } else {
-                resolve(filas);
-            }
-        });
-    });
+const listarAutorPorIdQuery = async (id) => {
+    try {
+        const result = await config.query('SELECT * FROM autores WHERE id = $1 LIMIT 1', [id]);
+        return result.rows;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 };
-
 
 /**
  * Guardar un nuevo autor
  */
 const crearAutorQuery = async (autor) => {
     const { nombres } = autor;
-    return new Promise((resolve, reject) => {
-        const sql = 'INSERT INTO autores (nombres) VALUES (?)';
-        config.query(sql, [nombres], (err, resultado) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(resultado);
-            }
-        });
-    });
+    try {
+        const result = await config.query(
+            'INSERT INTO autores (nombres) VALUES ($1) RETURNING *',
+            [nombres]
+        );
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 };
 
 /**
  * Actualizar un autor por su ID
  */
-const actualizarAutorQuery = (id, autor) => {
+const actualizarAutorQuery = async (id, autor) => {
     const { nombres } = autor;
-    return new Promise((resolve, reject) => {
-        const sql = 'UPDATE autores SET nombres = ? WHERE id = ?';
-        config.query(sql, [nombres, id], (err, resultado) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(resultado);
-            }
-        });
-    });
+    try {
+        const result = await config.query(
+            'UPDATE autores SET nombres = $1 WHERE id = $2 RETURNING *',
+            [nombres, id]
+        );
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 };
 
 /**
  * Eliminar un autor por su ID
  */
-const eliminarAutorQuery = (id) => {
-    return new Promise((resolve, reject) => {
-        const sql = 'DELETE FROM autores WHERE id = ?';
-        config.query(sql, [id], (err, resultado) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(resultado);
-            }
-        });
-    });
+const eliminarAutorQuery = async (id) => {
+    try {
+        const result = await config.query(
+            'DELETE FROM autores WHERE id = $1 RETURNING *',
+            [id]
+        );
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 };
 
 // Exportar todas las funciones definidas en este archivo

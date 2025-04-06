@@ -1,91 +1,79 @@
-import {config} from '../config.js';
+import { config } from '../config.js';
 
 /**
  * Carga la lista de libros
  */
-const listarTodosLibrosQuery = () => {
-    // Una promesa es una forma de que siempre se devuelva un resultado al quien llama (sea error o éxito)
-    // Si la consulta no genera error, entonces resuelve/cumple la promesa con el resultado
-    // Si hay algun error entonces rechaza la consulta e informa la razón 
-    return new Promise((resolve, reject) => {
-        config.query('SELECT * FROM libros', (err, filas) => {
-            // Si genera error, mostramos en la consola que es lo que falla
-            if (err) {
-                console.log(err);
-                reject(err);
-            } else {
-                // Si no hay error, devolvemos los datos de la tabla 
-                resolve(filas);
-            }
-        });
-    });
+const listarTodosLibrosQuery = async () => {
+    try {
+        const result = await config.query('SELECT * FROM libros');
+        return result.rows;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 };
 
 /**
  * Buscar un libro por su ID (llave primaria)
  */
-const listarLibroPorIdQuery = (id) => {
-    return new Promise((resolve, reject) => {
-        config.query('SELECT * FROM libros WHERE id = ? LIMIT 1', [id], (err, filas) => {
-            if (err) {
-                console.log(err);
-                reject(err);
-            } else {
-                resolve(filas);
-            }
-        });
-    });
+const listarLibroPorIdQuery = async (id) => {
+    try {
+        const result = await config.query('SELECT * FROM libros WHERE id = $1 LIMIT 1', [id]);
+        return result.rows;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 };
-
 
 /**
  * Guardar un nuevo libro
  */
 const crearLibroQuery = async (libro) => {
     const { nombre, copias, estante } = libro;
-    return new Promise((resolve, reject) => {
-        const sql = 'INSERT INTO libros (nombre, copias, estante) VALUES (?, ?, ?)';
-        config.query(sql, [nombre, copias, estante], (err, resultado) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(resultado);
-            }
-        });
-    });
+    try {
+        const result = await config.query(
+            'INSERT INTO libros (nombre, copias, estante) VALUES ($1, $2, $3) RETURNING *',
+            [nombre, copias, estante]
+        );
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 };
 
 /**
  * Actualizar un libro por su ID
  */
-const actualizarLibroQuery = (id, libro) => {
+const actualizarLibroQuery = async (id, libro) => {
     const { nombre, copias, estante } = libro;
-    return new Promise((resolve, reject) => {
-        const sql = 'UPDATE libros SET nombre = ?, copias = ?, estante = ? WHERE id = ?';
-        config.query(sql, [nombre, copias, estante, id], (err, resultado) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(resultado);
-            }
-        });
-    });
+    try {
+        const result = await config.query(
+            'UPDATE libros SET nombre = $1, copias = $2, estante = $3 WHERE id = $4 RETURNING *',
+            [nombre, copias, estante, id]
+        );
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 };
 
 /**
  * Eliminar un libro por su ID
  */
-const eliminarLibroQuery = (id) => {
-    return new Promise((resolve, reject) => {
-        const sql = 'DELETE FROM libros WHERE id = ?';
-        config.query(sql, [id], (err, resultado) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(resultado);
-            }
-        });
-    });
+const eliminarLibroQuery = async (id) => {
+    try {
+        const result = await config.query(
+            'DELETE FROM libros WHERE id = $1 RETURNING *',
+            [id]
+        );
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 };
 
 // Exportar todas las funciones definidas en este archivo
